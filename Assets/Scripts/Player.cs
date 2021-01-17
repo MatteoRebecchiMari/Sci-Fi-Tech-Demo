@@ -50,9 +50,12 @@ public class Player : MonoBehaviour
             direction.y -= _gravity;
         }
 
+        // Convert the local player direction into a GLOBAL motion
+        // (controller.Move() method handle ABSOLUTE movements (not relative to the gameobject))
+        Vector3 worldSpaceDirection = transform.TransformDirection(direction);
 
         // Move the player
-        _controller.Move(direction * _speed * Time.deltaTime);
+        _controller.Move(worldSpaceDirection * _speed * Time.deltaTime);
 
     }
 
