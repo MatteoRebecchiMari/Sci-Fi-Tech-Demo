@@ -13,12 +13,18 @@ public class Player : MonoBehaviour
         {
             Debug.LogError("CharacterController not found!");
         }
+
+        //Set Cursor to not be visible
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+
     }
 
     // Update is called once per frame
     void Update()
     {
         HandleMovements();
+        HandleMouseCursorVisibility();
     }
 
     [SerializeField]
@@ -57,5 +63,17 @@ public class Player : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Toggle the mouse cursor visibility
+    /// </summary>
+    void HandleMouseCursorVisibility()
+    {
+        // When pressing ESC we toggle the mouse visibility
+        if (Input.GetKeyUp(KeyCode.Escape))
+        {
+            Cursor.visible = !Cursor.visible;
+            Cursor.lockState = Cursor.visible ? CursorLockMode.None : CursorLockMode.Locked;
+        }
+    }
 
 }
