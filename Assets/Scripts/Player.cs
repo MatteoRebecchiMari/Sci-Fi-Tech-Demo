@@ -23,8 +23,15 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        HandleShotWithRay();
         HandleMovements();
         HandleMouseCursorVisibility();
+    }
+
+    // Fixed update
+    void FixedUpdate()
+    {
+        
     }
 
     [SerializeField]
@@ -74,6 +81,27 @@ public class Player : MonoBehaviour
             Cursor.visible = !Cursor.visible;
             Cursor.lockState = Cursor.visible ? CursorLockMode.None : CursorLockMode.Locked;
         }
+    }
+
+    /// <summary>
+    /// Handle ray cast shooting from the main camera to the forward position.
+    /// </summary>
+    void HandleShotWithRay()
+    {
+
+        // Left click mouse button
+        if (Input.GetMouseButtonDown(0))
+        {
+            // We cast a ray from the main camera to its forward position: CENTER OF THE SCREEN.
+            Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, 100))
+            {
+                Debug.DrawLine(ray.origin, hit.point, Color.red);
+                Debug.Log("We have hitten " + hit.collider.gameObject.name);
+            }
+        }        
     }
 
 }
